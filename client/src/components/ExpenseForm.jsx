@@ -23,9 +23,14 @@ const ExpenseForm = ({ isOpen, onClose, onExpenseAdded }) => {
   const fetchCategories = async () => {
     try {
       const response = await getCategories();
+      console.log('Categories fetched:', response.data);
       setCategories(response.data);
     } catch (error) {
       console.error('Error fetching categories:', error);
+      // If no categories exist, show message
+      if (error.response?.status === 401) {
+        console.log('Authentication error - user may need to login again');
+      }
     }
   };
 
@@ -90,12 +95,21 @@ const ExpenseForm = ({ isOpen, onClose, onExpenseAdded }) => {
               className="form-select"
             >
               <option value="">Select a category</option>
-              {categories.map((category) => (
-                <option key={category._id} value={category._id}>
-                  {category.name}
-                </option>
-              ))}
+              {categories.length === 0 ? (
+                <option disabled>No categories found - Create categories in Settings</option>
+              ) : (
+                categories.map((category) => (
+                  <option key={category._id} value={category._id}>
+                    {category.name}
+                  </option>
+                ))
+              )}
             </select>
+            {categories.length === 0 && (
+              <p className="text-sm text-gray-500 mt-1">
+                No categories available. <a href="/settings" className="text-blue-600 hover:underline">Create categories first</a>
+              </p>
+            )}
           </div>
 
           <div>

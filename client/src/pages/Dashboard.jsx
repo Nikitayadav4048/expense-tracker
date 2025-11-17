@@ -24,9 +24,15 @@ const Dashboard = () => {
       const year = currentDate.getFullYear();
       const month = currentDate.getMonth() + 1;
       const response = await getMonthlyReport(year, month);
+      console.log('Report data:', response.data);
       setReport(response.data);
     } catch (error) {
       console.error('Error fetching report:', error);
+      if (error.response?.status === 401) {
+        console.log('Authentication error - redirecting to login');
+        // Could redirect to login here if needed
+      }
+      setReport([]);
     } finally {
       setLoading(false);
     }

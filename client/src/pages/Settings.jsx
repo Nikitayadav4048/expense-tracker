@@ -38,9 +38,11 @@ const Settings = () => {
   const fetchCategories = async () => {
     try {
       const response = await getCategories();
+      console.log('Categories in Settings:', response.data);
       setCategories(response.data);
     } catch (error) {
       console.error('Error fetching categories:', error);
+      setCategories([]);
     }
   };
 
@@ -67,16 +69,19 @@ const Settings = () => {
     e.preventDefault();
     try {
       if (editingCategory) {
-        await updateCategory(editingCategory._id, categoryForm);
+        const response = await updateCategory(editingCategory._id, categoryForm);
+        console.log('Category updated:', response.data);
       } else {
-        await createCategory(categoryForm);
+        const response = await createCategory(categoryForm);
+        console.log('Category created:', response.data);
       }
-      fetchCategories();
+      await fetchCategories();
       setShowCategoryModal(false);
-      setCategoryForm({ name: '', color: '#3B82F6' });
+      setCategoryForm({ name: '', color: '#FF6B6B' });
       setEditingCategory(null);
     } catch (error) {
       console.error('Error saving category:', error);
+      alert('Error saving category: ' + (error.response?.data?.message || error.message));
     }
   };
 
