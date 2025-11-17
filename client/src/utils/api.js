@@ -6,6 +6,15 @@ const api = axios.create({
   baseURL: API_BASE_URL,
 });
 
+// Add auth token to all requests
+api.interceptors.request.use((config) => {
+  const token = localStorage.getItem('token');
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
+
 // Categories
 export const getCategories = () => api.get('/categories');
 export const createCategory = (data) => api.post('/categories', data);
