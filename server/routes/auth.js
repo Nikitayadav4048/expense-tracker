@@ -21,6 +21,21 @@ router.post('/register', async (req, res) => {
     const user = await User.create({ email, password });
     const token = generateToken(user._id);
 
+    // Create default categories for new user
+    const defaultCategories = [
+      { name: 'Food & Dining', color: '#FF6B6B', userId: user._id },
+      { name: 'Transportation', color: '#4ECDC4', userId: user._id },
+      { name: 'Shopping', color: '#45B7D1', userId: user._id },
+      { name: 'Entertainment', color: '#96CEB4', userId: user._id },
+      { name: 'Bills & Utilities', color: '#FFEAA7', userId: user._id },
+      { name: 'Healthcare', color: '#DDA0DD', userId: user._id },
+      { name: 'Education', color: '#98D8C8', userId: user._id },
+      { name: 'Travel', color: '#F7DC6F', userId: user._id }
+    ];
+
+    const Category = (await import('../models/Category.js')).default;
+    await Category.insertMany(defaultCategories);
+
     res.status(201).json({
       _id: user._id,
       email: user.email,

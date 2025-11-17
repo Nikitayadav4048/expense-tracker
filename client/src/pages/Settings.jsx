@@ -19,8 +19,10 @@ const Settings = () => {
   ];
 
   const colorOptions = [
-    '#3B82F6', '#EF4444', '#10B981', '#F59E0B', '#8B5CF6',
-    '#EC4899', '#06B6D4', '#84CC16', '#F97316', '#6366F1'
+    '#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFEAA7',
+    '#DDA0DD', '#98D8C8', '#F7DC6F', '#FF9FF3', '#54A0FF',
+    '#5F27CD', '#00D2D3', '#FF9F43', '#10AC84', '#EE5A24',
+    '#0ABDE3', '#006BA6', '#C44569', '#F8B500', '#6C5CE7'
   ];
 
   useEffect(() => {
