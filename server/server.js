@@ -18,6 +18,10 @@ app.use(cors());
 app.use(express.json());
 
 // Routes
+app.get('/', (req, res) => {
+  res.json({ message: 'Expense Tracker API is running!', status: 'OK' });
+});
+
 app.use('/api/auth', authRoutes);
 app.use('/api/categories', categoryRoutes);
 app.use('/api/budgets', budgetRoutes);
